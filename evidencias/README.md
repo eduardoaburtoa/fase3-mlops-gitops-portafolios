@@ -5,6 +5,7 @@
 | Evidencia | Qué permite comprobar |
 |---|---|
 | [GitHub Actions](github_actions.json) | Validación y despliegue continuo completos en un ejecutor temporal |
+| [Panel MLflow](mlflow.png) | Captura real de parámetros, métricas y modelo registrado como artefacto |
 | [Evaluación MLflow](evaluacion.json) | Cinco métricas, matriz de confusión, corrida y recarga idéntica |
 | [Pruebas locales](tests.xml) | Nueve pruebas automatizadas aprobadas |
 | [Experimento Docker](despliegue.json) | Salud, idempotencia, recuperación de estado y dos incidentes |
