@@ -1,0 +1,6 @@
+-r requirements-runtime.txt
+pytest==9.1.1
+httpx==0.28.1
+mlflow==2.22.2
+SQLAlchemy==2.0.40
+matplotlib==3.10.3

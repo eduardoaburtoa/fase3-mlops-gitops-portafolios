@@ -1,0 +1,14 @@
+{
+  "environment": "academic-staging",
+  "container": "vertice-fase3-api",
+  "port": 18083,
+  "image_repository": "vertice-fase3",
+  "model_sha256": "f48c7496d5a12bd15d535721e3e83c6ef895b1ae7eaccbe7f4f4c60705bb1916",
+  "threshold": 0.2,
+  "production_authorized": false,
+  "replicas": 1,
+  "cpu_limit": 2,
+  "memory_limit": "1g",
+  "readiness_timeout_seconds": 90,
+  "scope": "Entorno local o efímero de GitHub Actions. Sin alojamiento público persistente ni órdenes de inversión."
+}

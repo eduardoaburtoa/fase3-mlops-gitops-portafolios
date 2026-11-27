@@ -1,0 +1,1 @@
+{"availability_target":0.99,"latency_limit_ms":250,"latency_target":0.99,"minimum_samples":20,"consecutive_bad_windows":2,"scope":"Ventanas de laboratorio; no SLA mensual. Calidad requiere etiquetas. PSI de longitud es exploratorio."}

@@ -1,0 +1,52 @@
+name: Pipeline MLOps y GitOps
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m pytest pruebas -q --junitxml=evidencias/tests.xml
+      - run: python scripts/evaluate.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: validation-${{ github.sha }}
+          path: |
+            evidencias/
+            runtime/mlruns/
+  deploy-staging:
+    if: github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Build immutable candidate
+        run: docker build -t vertice-fase3:${{ github.sha }} .
+      - name: Deploy, reconcile drift, inject incidents and rollback
+        shell: bash
+        run: |
+          export API_TOKEN=$(openssl rand -hex 32)
+          echo "::add-mask::$API_TOKEN"
+          python scripts/run_demo.py --image vertice-fase3:${{ github.sha }}
+          docker image inspect vertice-fase3:${{ github.sha }} > evidencias/image.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deployment-${{ github.sha }}
+          path: |
+            evidencias/
+            runtime/audit.jsonl
