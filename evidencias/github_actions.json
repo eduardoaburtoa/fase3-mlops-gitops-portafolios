@@ -1,0 +1,101 @@
+{
+  "run_id": 45922494111,
+  "url": "https://github.com/eduardoaburtoa/fase3-mlops-gitops-portafolios/actions/runs/45922494111",
+  "sha": "1107f485ec0c50af7237af7d0c6212aab499a66f",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "validate",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pip install -r requirements.txt",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pytest pruebas -q --junitxml=evidencias/tests.xml",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python scripts/evaluate.py",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "deploy-staging",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pip install requests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build immutable candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Deploy, reconcile drift, inject incidents and rollback",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

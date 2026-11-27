@@ -1,0 +1,535 @@
+{
+  "scope": "Executed Docker laboratory, not production",
+  "started_unix": 1795742657.0431738,
+  "windows": [
+    {
+      "label": "baseline",
+      "summary": {
+        "status": "healthy",
+        "n": 20,
+        "availability": 1.0,
+        "latency_compliance": 1.0,
+        "latency_p95_ms": 5.449747666716576,
+        "availability_budget_used": 0.0,
+        "latency_budget_used": 0.0
+      },
+      "samples": [
+        {
+          "status": 200,
+          "latency_ms": 9.50341485440731,
+          "trace_id": "efeacb7bfa294d64b193a8bd90402113"
+        },
+        {
+          "status": 200,
+          "latency_ms": 5.449747666716576,
+          "trace_id": "0198688f999d4cfc978ef62d57ccb33b"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.8954149931669235,
+          "trace_id": "4819f4cf9dfb4a56bb94d7ee440bf088"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.8842521607875824,
+          "trace_id": "08290fca4a724448ba0c78a39701a568"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.2566655427217484,
+          "trace_id": "f9fee31023624e50bf36bc0385676a76"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.421373665332794,
+          "trace_id": "f9db4521af354677a7bc7b76b762b27b"
+        },
+        {
+          "status": 200,
+          "latency_ms": 5.07500022649765,
+          "trace_id": "96f772590d1447db8bbc3af8ff63b755"
+        },
+        {
+          "status": 200,
+          "latency_ms": 4.324540495872498,
+          "trace_id": "d61eaf49fb0f42c696e76c22ee877c7c"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.7586260586977005,
+          "trace_id": "79acb638b6ed45a28bac3ee78b85005f"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.5621635615825653,
+          "trace_id": "82a334f92f684bb99b1420fecf20bee4"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.440791741013527,
+          "trace_id": "e3e8c7fd8bf34421858d696a66c72a43"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.926124259829521,
+          "trace_id": "f7a6994edfc64de594ce2258659cb347"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.63424776494503,
+          "trace_id": "01b5331cfe204745be004c268fa1ad66"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.680419012904167,
+          "trace_id": "813bdd09c5da42cdb189d06190042852"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.5551673024892807,
+          "trace_id": "a808e8d97ffe478e887a5e0337351298"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.3906659334897995,
+          "trace_id": "681708e7564b488e9cf0cdd9ae28948d"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.4052485823631287,
+          "trace_id": "2f5ce9954f3c49bd9deb3061f8f10e59"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.525417134165764,
+          "trace_id": "46ee8b8732d34e3cad85ff5294391f20"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.380790188908577,
+          "trace_id": "771b06ac659a47e09de328313c1b452e"
+        },
+        {
+          "status": 200,
+          "latency_ms": 2.5902073830366135,
+          "trace_id": "b7b1568094ca4e85b12ddc75fbe4956d"
+        }
+      ]
+    },
+    {
+      "label": "injected_latency_1",
+      "summary": {
+        "status": "breach",
+        "n": 20,
+        "availability": 1.0,
+        "latency_compliance": 0.0,
+        "latency_p95_ms": 426.2425843626261,
+        "availability_budget_used": 0.0,
+        "latency_budget_used": 99.99999999999991
+      },
+      "samples": [
+        {
+          "status": 200,
+          "latency_ms": 415.7065413892269,
+          "trace_id": "205d2edf1ee34dcbb4c6d4b5fb7c4813"
+        },
+        {
+          "status": 200,
+          "latency_ms": 423.228207975626,
+          "trace_id": "0cb9f5de1ca743a28d09716b14bb9891"
+        },
+        {
+          "status": 200,
+          "latency_ms": 417.25791431963444,
+          "trace_id": "80eff2d581a34e46b61690d850540e04"
+        },
+        {
+          "status": 200,
+          "latency_ms": 419.2214608192444,
+          "trace_id": "93a8ca37e61740e196ddc380b6ce87d8"
+        },
+        {
+          "status": 200,
+          "latency_ms": 419.13058422505856,
+          "trace_id": "0e0c8a06edd842a3a6df0e57cfbf2a34"
+        },
+        {
+          "status": 200,
+          "latency_ms": 417.80329309403896,
+          "trace_id": "7d8dd2d28a4f4396a9a5c080d2b82491"
+        },
+        {
+          "status": 200,
+          "latency_ms": 428.5686258226633,
+          "trace_id": "21c37763a3cd4d32b66136d8e9f09282"
+        },
+        {
+          "status": 200,
+          "latency_ms": 422.8330384939909,
+          "trace_id": "c4bf49e4cf9045db9177689f52ab2b54"
+        },
+        {
+          "status": 200,
+          "latency_ms": 422.8806234896183,
+          "trace_id": "58659d26a758458e94a736ac722c48f6"
+        },
+        {
+          "status": 200,
+          "latency_ms": 426.2425843626261,
+          "trace_id": "78ef0c414a764e35b69444177a098365"
+        },
+        {
+          "status": 200,
+          "latency_ms": 419.728834182024,
+          "trace_id": "31c13b740c41496ca59d1623bba0f896"
+        },
+        {
+          "status": 200,
+          "latency_ms": 418.24429109692574,
+          "trace_id": "345b7dd90c63436d9dea21454a7c7d32"
+        },
+        {
+          "status": 200,
+          "latency_ms": 425.2795409411192,
+          "trace_id": "2924537e7f67484a92d7cc5d3fee686f"
+        },
+        {
+          "status": 200,
+          "latency_ms": 422.09479212760925,
+          "trace_id": "6e232fbe87cb4d6f9ed9e94751a9ea6e"
+        },
+        {
+          "status": 200,
+          "latency_ms": 424.2169577628374,
+          "trace_id": "caf5acda007f4d9e82b8a8507ca8e153"
+        },
+        {
+          "status": 200,
+          "latency_ms": 421.1933333426714,
+          "trace_id": "45bc9f97889940c4b5909ba22b84f06d"
+        },
+        {
+          "status": 200,
+          "latency_ms": 423.48646000027657,
+          "trace_id": "531eef6b58f44042b3dfa9c901c6033e"
+        },
+        {
+          "status": 200,
+          "latency_ms": 422.631336376071,
+          "trace_id": "c56888307b654b2fbce60dca70b3376d"
+        },
+        {
+          "status": 200,
+          "latency_ms": 418.4414613991976,
+          "trace_id": "5d0f8a2138294715a3d404d0d17ba271"
+        },
+        {
+          "status": 200,
+          "latency_ms": 416.6990388184786,
+          "trace_id": "3c21deb162074cd1af29e3bdbf2abbdb"
+        }
+      ]
+    },
+    {
+      "label": "injected_latency_2",
+      "summary": {
+        "status": "breach",
+        "n": 20,
+        "availability": 1.0,
+        "latency_compliance": 0.0,
+        "latency_p95_ms": 426.4558758586645,
+        "availability_budget_used": 0.0,
+        "latency_budget_used": 99.99999999999991
+      },
+      "samples": [
+        {
+          "status": 200,
+          "latency_ms": 419.63979229331017,
+          "trace_id": "2e654e119bdb45b58c39039ed4edf5bb"
+        },
+        {
+          "status": 200,
+          "latency_ms": 418.5847081243992,
+          "trace_id": "6ace51840c794cb88695f940d517fd6c"
+        },
+        {
+          "status": 200,
+          "latency_ms": 426.4558758586645,
+          "trace_id": "2850bb9b4b284c43a1a8fb1032ccfdd3"
+        },
+        {
+          "status": 200,
+          "latency_ms": 417.2223322093487,
+          "trace_id": "013608e8e75e438896e0ca8e7bc4167d"
+        },
+        {
+          "status": 200,
+          "latency_ms": 423.4729167073965,
+          "trace_id": "c244eff732974050bb16b922f22fe0c7"
+        },
+        {
+          "status": 200,
+          "latency_ms": 427.9439579695463,
+          "trace_id": "f5f9b02ce6524c778aea923c4271c96c"
+        },
+        {
+          "status": 200,
+          "latency_ms": 421.5097911655903,
+          "trace_id": "99ec39f1d29643d380c2e4ba9a77372e"
+        },
+        {
+          "status": 200,
+          "latency_ms": 422.56650142371655,
+          "trace_id": "422b80a572d24254b4fb88298bbfd75b"
+        },
+        {
+          "status": 200,
+          "latency_ms": 415.7387465238571,
+          "trace_id": "e51a7b929cca479d8fb98bc82664c6ee"
+        },
+        {
+          "status": 200,
+          "latency_ms": 424.5174992829561,
+          "trace_id": "160e39d7d18741dca9ac988db173d763"
+        },
+        {
+          "status": 200,
+          "latency_ms": 409.07212533056736,
+          "trace_id": "e573304e86f043fe868228d0d5c7f549"
+        },
+        {
+          "status": 200,
+          "latency_ms": 414.51624780893326,
+          "trace_id": "9a06ef8f7cf64a97b0afa14aec6360b9"
+        },
+        {
+          "status": 200,
+          "latency_ms": 418.354956433177,
+          "trace_id": "bcf72a40c3674b08ac235fcc96321623"
+        },
+        {
+          "status": 200,
+          "latency_ms": 423.7233344465494,
+          "trace_id": "bdfd5b2fe3c145848b8eba7c9f1f18f2"
+        },
+        {
+          "status": 200,
+          "latency_ms": 416.8620426207781,
+          "trace_id": "b24b5b8327b641e5a3e1e0cad80f6e24"
+        },
+        {
+          "status": 200,
+          "latency_ms": 418.5465835034847,
+          "trace_id": "4fe792111f324d9d8c1dc46be7c1469d"
+        },
+        {
+          "status": 200,
+          "latency_ms": 426.3735432177782,
+          "trace_id": "46372db102dd4e81b675597d505ae3eb"
+        },
+        {
+          "status": 200,
+          "latency_ms": 420.2184583991766,
+          "trace_id": "563bcf56f9ac49bea9610a9b76bd91fc"
+        },
+        {
+          "status": 200,
+          "latency_ms": 421.66841588914394,
+          "trace_id": "b6a5d433307b4d8fa81970b16e141152"
+        },
+        {
+          "status": 200,
+          "latency_ms": 426.2372497469187,
+          "trace_id": "498392076b534f3ba34feaec89ac7970"
+        }
+      ]
+    },
+    {
+      "label": "recovered",
+      "summary": {
+        "status": "healthy",
+        "n": 20,
+        "availability": 1.0,
+        "latency_compliance": 1.0,
+        "latency_p95_ms": 6.5971240401268005,
+        "availability_budget_used": 0.0,
+        "latency_budget_used": 0.0
+      },
+      "samples": [
+        {
+          "status": 200,
+          "latency_ms": 9.102249518036842,
+          "trace_id": "dbd47d728f94409595dd59a4fd2751a8"
+        },
+        {
+          "status": 200,
+          "latency_ms": 6.5971240401268005,
+          "trace_id": "3e99cda5943d4bcdb6d2aef0f273584b"
+        },
+        {
+          "status": 200,
+          "latency_ms": 5.435749888420105,
+          "trace_id": "1f65cf1ca4304db9a1935b0ceb48d293"
+        },
+        {
+          "status": 200,
+          "latency_ms": 5.118580535054207,
+          "trace_id": "b7644806ef7c4b72b70b763b61a74ba7"
+        },
+        {
+          "status": 200,
+          "latency_ms": 5.302125588059425,
+          "trace_id": "f4c4f18f5be74122b77cf8b8e39d78b2"
+        },
+        {
+          "status": 200,
+          "latency_ms": 5.088038742542267,
+          "trace_id": "361d078180f240a2bd875cf71fc686bb"
+        },
+        {
+          "status": 200,
+          "latency_ms": 5.110332742333412,
+          "trace_id": "7d7f68ff5ba44e9d9862d1a27ad42331"
+        },
+        {
+          "status": 200,
+          "latency_ms": 4.740959033370018,
+          "trace_id": "2e611e7594014585a86ac2d05ad0544c"
+        },
+        {
+          "status": 200,
+          "latency_ms": 4.201874136924744,
+          "trace_id": "4a4eae58a5604d0f87ccd309155fc098"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.4917909651994705,
+          "trace_id": "d03992861f4d4666b2b27aa94fdfeaf8"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.705166280269623,
+          "trace_id": "bfd0d47132034e588b3904647f224eaa"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.64658422768116,
+          "trace_id": "26405916901843babf19fd882aa093ce"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.8304999470710754,
+          "trace_id": "791f6b5686964e0eb33960e5a69bd3c2"
+        },
+        {
+          "status": 200,
+          "latency_ms": 4.504000768065453,
+          "trace_id": "fb02e7fc1c164dca8ee1cc5bf6b54f35"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.260251134634018,
+          "trace_id": "a1102459a3a04eb5a54309efd46121c4"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.24820913374424,
+          "trace_id": "258fb19d29a444b29cfc1c62490ed098"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.1412523239851,
+          "trace_id": "9210230a2d86420a94541e88d1e03692"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.3010412007570267,
+          "trace_id": "8980ceb205d74606bd4b27960b5e3b1a"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.1322482973337173,
+          "trace_id": "395075d552b948ccb94775b954b212df"
+        },
+        {
+          "status": 200,
+          "latency_ms": 3.8822516798973083,
+          "trace_id": "1457fef49e194ed6afba7b9ec4084eb8"
+        }
+      ]
+    }
+  ],
+  "initial": {
+    "active": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 0,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    },
+    "previous": null,
+    "action": "deploy"
+  },
+  "idempotent": {
+    "action": "noop",
+    "active": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 0,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    }
+  },
+  "drift_recovery": {
+    "active": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 0,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    },
+    "previous": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 0,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    },
+    "action": "deploy"
+  },
+  "incident_readiness": {
+    "action": "rollback_after_failed_readiness",
+    "recovered": true,
+    "active": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 0,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    }
+  },
+  "latency_deploy": {
+    "active": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 400,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    },
+    "previous": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 0,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    },
+    "action": "deploy"
+  },
+  "alert": {
+    "severity": "P2",
+    "reason": "Two consecutive latency SLO breaches",
+    "automatic_action": "rollback",
+    "simulation": true
+  },
+  "latency_rollback": {
+    "active": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 0,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    },
+    "previous": {
+      "image": "sha256:9422f37e118fa9a191ba7f60d3ca3aef6a1f26adef74d13541d9273348aa294b",
+      "delay": 400,
+      "config_sha": "b15f307e453cb890ce41dde64b1c2766ef41dbf4b240325ef81420b4e2a28e53"
+    },
+    "action": "rollback"
+  },
+  "finished_unix": 1795742693.291723,
+  "all_assertions_passed": true
+}

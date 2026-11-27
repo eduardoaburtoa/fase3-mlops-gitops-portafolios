@@ -28,7 +28,12 @@ app=FastAPI(title='Vértice AI Fase III',version='1.0.0',lifespan=lifespan)
 @app.middleware('http')
 async def instrument(request:Request,call_next):
     started=time.perf_counter();trace_id=uuid.uuid4().hex
-    response=await call_next(request)
+    try:
+        response=await call_next(request)
+    except Exception:
+        route=request.scope.get('route');path=getattr(route,'path','unmatched')
+        record(request.method,path,500,time.perf_counter()-started,MANIFEST['sha256'],trace_id)
+        raise
     route=request.scope.get('route');path=getattr(route,'path','unmatched')
     record(request.method,path,response.status_code,time.perf_counter()-started,MANIFEST['sha256'],trace_id)
     response.headers['X-Trace-ID']=trace_id

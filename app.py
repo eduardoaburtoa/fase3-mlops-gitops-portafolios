@@ -38,4 +38,4 @@ elif page=='Contexto de negocio':
 else:
     base='https://github.com/eduardoaburtoa/fase3-mlops-gitops-portafolios'
     st.link_button('Abrir portada y entregables',base)
-    st.write('Pipeline, operación, portfolio, entrevista y evidencias estarán enlazados desde la portada.')
+    st.write('Pipeline, operación, portfolio, entrevista y evidencias disponibles desde la portada.')

@@ -13,7 +13,10 @@ def audit(event,**fields):
 def healthy(cfg):
     try:
         r=requests.get(f"http://127.0.0.1:{cfg['port']}/health",timeout=2)
-        return r.status_code==200
+        if r.status_code!=200:return False
+        token=os.environ.get('API_TOKEN','')
+        m=requests.get(f"http://127.0.0.1:{cfg['port']}/v1/model",headers={'X-API-Key':token},timeout=2)
+        return m.status_code==200 and cfg['model_sha256'] in m.text
     except requests.RequestException: return False
 
 def start(cfg,image,token,delay=0,unready=False):

@@ -21,7 +21,7 @@ def evaluate():
     with mlflow.start_run() as run:
         mlflow.log_params({'threshold':.2,'scope':'academic','test_used_for_tuning':False,'model_sha256':json.loads((ROOT/'modelos/manifest.json').read_text())['sha256']})
         mlflow.log_metrics(metrics)
-        info=mlflow.sklearn.log_model(model,'model')
+        info=mlflow.sklearn.log_model(model,'model',input_example=data.texto.to_numpy()[:2],signature=mlflow.models.infer_signature(data.texto.to_numpy()[:2],model.predict(data.texto.iloc[:2])))
         restored=mlflow.sklearn.load_model(info.model_uri)
         np.testing.assert_array_equal(p,restored.predict_proba(data.texto)[:,1])
         mlflow.log_artifact(str(ROOT/'config/data_manifest.json'))
