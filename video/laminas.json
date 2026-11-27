@@ -1,0 +1,10 @@
+[
+ {"title":"¿Qué problema resuelvo?","points":["Priorizar revisiones con criterio humano","Noticias negativas inician análisis","No hay órdenes de inversión"],"image":"streamlit.png"},
+ {"title":"¿Cómo integré la solución?","points":["SVM calibrada · umbral 0.20","API FastAPI + Docker","MLflow + Streamlit"],"image":"arquitectura.png"},
+ {"title":"¿Qué sucede con un cambio?","points":["Validación de código y datos","Imagen y estado declarativo versionados","CD en ejecutor temporal"],"image":"arquitectura.png"},
+ {"title":"¿Qué resultados puedo defender?","points":["452 noticias financieras en inglés","F1 0.7445 · ROC-AUC 0.9548","10 FN y 25 FP"],"image":"mlflow.png"},
+ {"title":"¿Cómo respondí a incidentes?","points":["Candidato no listo: rechazo y restauración","Retardo 400 ms: alerta y rollback","p95 recuperado: 6.60 ms en corrida inicial"],"image":"latencia.png"},
+ {"title":"¿Qué valor de negocio espero?","points":["Proyección Fase I: ROI 298.6 % a 3 años","24 asesores · 3,600 clientes","Cliente conserva $1.04 por peso de corretaje"],"image":"streamlit.png"},
+ {"title":"¿Qué falta para producción?","points":["production_authorized=false","Validar idioma, dominio y derechos de datos","Durabilidad, seguridad y carga: pendientes"],"image":"arquitectura.png"},
+ {"title":"¿Cuál es el siguiente paso?","points":["Piloto propuesto: 9 meses · 6 asesores","Inversión prevista: $9,083,448 MXN","Arquitectura funcional no implica ROI realizado"],"image":"streamlit.png"}
+]
