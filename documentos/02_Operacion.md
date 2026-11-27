@@ -26,3 +26,83 @@ RB02, latencia persistente: confirmar dos ventanas incumplidas, registrar alerta
 
 La reevaluación preserva accuracy 0.9226, precision 0.6711, recall 0.8361, F1 0.7445 y ROC-AUC 0.9548. Los 10 falsos negativos representan noticias negativas omitidas; los 25 falsos positivos añaden trabajo de revisión. La cobertura lingüística y el cambio de dominio son límites materiales. El seguimiento de calidad futura requiere etiquetas independientes; una variación en entradas no prueba por sí sola degradación de desempeño.
 La optimización implementada evita recrear contenedores cuando el estado ya coincide, limita recursos y reduce alertas por persistencia de dos ventanas. Los antecedentes de batching y fairness se conservan identificados como históricos, sin atribuirles una nueva medición. Priorizaría luego almacenamiento durable, métricas por cohortes, pruebas de carga sostenidas, firma de imágenes y un despliegue de dos instancias antes de afirmar preparación industrial.
+## Métricas clave de desempeño y lectura operativa
+
+Separo desempeño del clasificador, estado del servicio y utilidad de negocio. Mezclarlos llevaría a conclusiones incorrectas: una API rápida puede emitir una señal poco pertinente; un buen F1 histórico no prueba rentabilidad; una recuperación técnica no acredita continuidad mensual. Mi tablero muestra el origen y el alcance de la evidencia antes de interpretarla.
+
+| Métrica del test congelado | Valor | Lectura para revisión humana |
+|---|---:|---|
+| Accuracy | 0.922566 | Proporción global correcta; puede ocultar el peso de la clase minoritaria |
+| Precision | 0.671053 | De las señales negativas emitidas, una parte requiere descarte posterior |
+| Recall | 0.836066 | Recupera 51 de 61 noticias negativas en este test |
+| F1 | 0.744526 | Resume el equilibrio entre precision y recall al umbral fijado |
+| ROC-AUC | 0.954761 | Discriminación entre clases en el test, no garantía de calibración ni utilidad financiera |
+| Falsos negativos | 10 | Noticias negativas omitidas por la señal |
+| Falsos positivos | 25 | Revisiones adicionales sobre noticias no negativas |
+
+Fuente: `evidencias/evaluacion.json`. Clase positiva: noticia negativa. La matriz completa contiene 366 verdaderos negativos y 51 verdaderos positivos. Las métricas se calcularon sobre 452 noticias en inglés. El umbral 0.20 permanece congelado y no se seleccionó de nuevo en esta fase.
+
+| Ventana local original | N | p95 HTTP ms | Disponibilidad | Cumplimiento de latencia |
+|---|---:|---:|---:|---:|
+| Referencia | 20 | 5.4497 | 100 % | 100 % |
+| Retardo inyectado 1 | 20 | 426.2426 | 100 % | 0 % |
+| Retardo inyectado 2 | 20 | 426.4559 | 100 % | 0 % |
+| Recuperación | 20 | 6.5971 | 100 % | 100 % |
+
+Fuente: `despliegue.json`. Estos porcentajes corresponden a solicitudes de inferencia del ensayo, no a todos los sondeos de salud ni a un mes de operación. Con sólo 20 observaciones por ventana, el percentil es una estadística descriptiva de esa muestra. No lo extrapolo a miles de clientes concurrentes ni reporto un intervalo de confianza inexistente.
+
+## Presupuestos y decisiones de atención
+
+El monitor compara la fracción de eventos buenos con 0.99 para disponibilidad y latencia. Exige al menos 20 observaciones. Para latencia, un evento malo supera 250 ms; para disponibilidad, se cuenta respuesta 5xx o fallo de transporte. La prueba además exige respuestas 200 para no aceptar silenciosamente errores 4xx del contrato. Estas definiciones delimitan qué mide cada indicador.
+
+En cada ventana de 20 solicitudes se permiten 0.2 eventos malos como presupuesto proporcional. Las ventanas inducidas tuvieron 20 solicitudes lentas y consumieron cien veces ese presupuesto. En el conjunto de 80 solicitudes, el consumo fue cincuenta veces y el saldo negativo de 39.2. La alerta tras dos ventanas reduce sensibilidad a un pico aislado, a costa de esperar más antes de actuar. No medí una tasa real de falsas alertas; la reducción de ruido es una propiedad de diseño, no un ahorro cuantificado.
+
+Una alerta P2 de latencia prioriza restaurar una configuración conocida. Si la restauración falla, el servicio requiere intervención. No existe una autorización implícita para modificar decisiones de inversión, reentrenar sin validación o cambiar el umbral con urgencia. La acción automatizada es reversible y se limita al laboratorio.
+
+## Estrategias de auditoría y reconstrucción del incidente
+
+`auditoria.jsonl` conserva eventos con tiempo Unix, acción, identificador de imagen y configuración. La secuencia permite distinguir `deploy_started`, `deploy_healthy`, `reconcile_noop` y `readiness_failed`. No interpreto un evento de inicio como evidencia de finalización: la confirmación de salud y el resultado de rollback son los que permiten cerrar el incidente técnico.
+
+| Pregunta de auditoría | Evidencia que consulto | Qué no demuestra por sí sola |
+|---|---|---|
+| ¿Qué se quiso desplegar? | Candidato en `deploy_started` | Que haya llegado a estar sano |
+| ¿Qué versión quedó activa? | `deploy_healthy` y estado guardado | Su idoneidad financiera |
+| ¿Se evitó recreación innecesaria? | `reconcile_noop` | Un ahorro monetario medido |
+| ¿Falló la promoción? | `readiness_failed` | La causa raíz completa sin diagnóstico |
+| ¿Se restauró el servicio? | `rollback_recovered` y ventana posterior | Alta disponibilidad durante el reemplazo |
+| ¿Qué solicitud produjo una señal? | `trace_id`, ruta, estado y hash en log JSON | Identidad del cliente, que no se registra |
+
+La auditoría local es un archivo editable y no está firmada ni protegida contra alteraciones privilegiadas. Git conserva una versión publicada para revisión, pero eso no la convierte en un registro inmutable de producción. Propongo almacenamiento central con controles de acceso, retención definida y firma o protección equivalente antes de un piloto con datos reales. No presento esas medidas como implementadas.
+
+## Acciones de optimización realizadas
+
+| Acción implementada | Evidencia disponible | Consecuencia y límite |
+|---|---|---|
+| Reconciliación idempotente | Resultado `noop` en ambos ensayos | Evita recrear un contenedor sano sin cambios; no hay ahorro de costo medido |
+| Comprobación de identidad y salud | Candidato no listo rechazado y rollback recuperado | Reduce promoción de una configuración defectuosa; no elimina interrupción |
+| Restauración tras retardo persistente | p95 de 426.4559 a 6.5971 ms en ensayo original | Recupera la configuración estable; no mejora el algoritmo |
+| Límites de recursos Docker | Declaración de dos CPU y 1 GB | Acota recursos permitidos; no es una medición de CPU o memoria usados |
+| Persistencia de dos ventanas | Alerta tras dos incumplimientos | Evita reaccionar a una sola ventana; tasa de ruido no medida |
+| Reevaluación de modelo congelado | Probabilidades idénticas al recargar MLflow | Evita introducir cambios predictivos en una entrega de operación |
+
+No atribuyo a la Fase III los resultados históricos de batching de Actividad 9 como si los hubiera vuelto a medir. Tampoco afirmo que se implementaron caché, poda, cuantización o escalamiento horizontal. Incorporarlos sin experimento habría añadido complejidad sin evidencia de una necesidad en este laboratorio. Esa comparación es una decisión de alcance; no una prueba de inferioridad de otras soluciones.
+
+## Runbooks y límites de recuperación
+
+RB01 comienza cuando un candidato no responde sano. Se preserva el registro de la configuración anterior, se rechaza la promoción y se vuelve a iniciar esa configuración. Se comprueban autenticación, salud y hash. Si no existe versión anterior o no se recupera, el reconciliador falla y requiere intervención. No se cambia el modelo para resolver un incidente de infraestructura.
+
+RB02 comienza con dos ventanas de latencia incumplida. Se confirma que las solicitudes usen el contrato previsto y se registra la alerta. Se restaura la configuración anterior y se mide una ventana posterior. El cierre del experimento está respaldado por sus aserciones y muestras, no sólo por el mensaje de éxito de un comando. La segunda ejecución confirmó recuperación nuevamente; sus cifras se conservan separadas en `despliegue_revision_final.json`.
+
+![Arquitectura operativa](../evidencias/arquitectura.png)
+
+Figura 1. Componentes del laboratorio y relación entre validación, servicio y auditoría. El gráfico no implica despliegue permanente ni trazas distribuidas.
+
+![Latencia por ventana](../evidencias/latencia.png)
+
+Figura 2. Respuesta a retardo inyectado y recuperación. Se conserva la primera corrida como referencia del reporte; la repetición final tiene su propio archivo de evidencia.
+
+## Monitoreo futuro y criterio de gobierno
+
+Actividad 8 enseñó a distinguir detección, respuesta y recuperación; Actividad 9 añadió costos, escala y gobierno. Mantengo esas lecciones sin afirmar que el prototipo actual contiene una plataforma completa de observabilidad. Los contadores en memoria se reinician con el proceso. La correlación por trace_id es local; no existe Collector de OpenTelemetry. El tablero lee evidencias guardadas, no una cartera real en tiempo real.
+
+Para un piloto propondría métricas por idioma y perfil, etiquetas independientes, análisis de deriva y retención durable. No usaría una señal de drift como autorización automática de reentrenamiento. El corpus CC BY-NC-SA 3.0 requiere resolver derechos para uso comercial y el modelo en inglés requiere adaptación validada al dominio mexicano. `production_authorized=false` se conserva. Los 150 clientes son personajes ficticios con posiciones de 5 a 20 millones MXN; el 1 % de compra y de venta son supuestos académicos. Una noticia inicia análisis, no autoriza una operación. La IA no sustituye el criterio del banquero; lo aumenta.

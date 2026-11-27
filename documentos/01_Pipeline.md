@@ -26,3 +26,80 @@ La prueba Docker confirmó despliegue inicial, reconciliación idempotente, recu
 
 Requisitos: Python 3.12, Docker y memoria suficiente para instalar dependencias. Ejecutar pip install -r requirements.txt; python -m pytest pruebas -q; python scripts/evaluate.py; docker build -t vertice-fase3:local .; definir API_TOKEN mediante un secreto aleatorio de al menos 16 caracteres; python scripts/run_demo.py --image vertice-fase3:local. Para el tablero: streamlit run app.py.
 La API escucha en loopback 18083. El contenedor usa un usuario sin privilegios, dos CPU y 1 GB como límites de laboratorio. No se versionan secretos ni el directorio runtime. Para abrir MLflow: mlflow ui --backend-store-uri runtime/mlruns. Antes de producción exigiría validación del dominio, derechos de uso del dataset, revisión de seguridad, supervisión humana y un entorno persistente con gestión centralizada de secretos.
+## Pruebas automatizadas de datos
+
+La puerta de calidad empieza en `scripts/check_data.py`, antes de cargar el modelo para la reevaluación. Cada archivo del manifiesto se lee como bytes y se compara mediante SHA-256 con la referencia versionada. Un cambio de contenido, incluso si la estructura del CSV parece correcta, produce `ValueError` y una salida no exitosa. No actualizo el manifiesto para hacer pasar un archivo inesperado: primero debo identificar y justificar el cambio.
+
+| Archivo controlado | SHA-256 esperado |
+|---|---|
+| Modelo SVM calibrada | f48c7496d5a12bd15d535721e3e83c6ef895b1ae7eaccbe7f4f4c60705bb1916 |
+| Predicciones del test | ac1c67489c5f7c0eb9eefdc956829a5c791b5b7c62e9450282475cbcfaaa819b |
+| Clientes simulados | 88f29f5781aed1465bf200763e144570103706e5ea2167ace5d1a738da35accf |
+
+Una vez validada la integridad, el script comprueba reglas semánticas. Los identificadores del test deben ser únicos; `texto` e `y` no pueden estar vacíos; las clases observadas deben ser 0 y 1. Además, la etiqueta numérica debe coincidir con el significado de `negative`. Esto evita invertir la interpretación de la clase positiva sin advertirlo. El archivo de test conserva 452 filas y su tamaño también se verifica en la prueba automatizada.
+
+| Conjunto | Regla | Consecuencia de fallo |
+|---|---|---|
+| Test | Identificador único y texto/objetivo presentes | Se detiene la validación; no se evalúa ni despliega |
+| Test | Clases 0 y 1 y correspondencia con etiqueta negativa | Evita presentar métricas con etiquetas intercambiadas |
+| Clientes | Exactamente 150 e identificadores únicos | Impide cambiar inadvertidamente el escenario didáctico |
+| Clientes | Posiciones entre 5 y 20 millones MXN | Preserva el rango del caso de banquero Sr. |
+| Clientes | Perfiles Conservador, Moderado o Agresivo | Rechaza categorías no contempladas por el contrato |
+
+Las reglas de estructura se implementan mediante aserciones. La reproducción indicada ejecuta Python sin optimización; no debe usarse `python -O`, que deshabilita esas aserciones. Dejo visible esta limitación sin alterar la ingeniería aprobada en esta revisión documental. Los hashes prueban identidad del archivo, no exactitud económica de sus datos, ausencia de sesgo ni derechos de uso. Por eso el control técnico no sustituye la revisión del origen y del propósito.
+
+## Pruebas de código y contrato de servicio
+
+El archivo `pruebas/test_pipeline.py` reúne nueve casos ejecutados por pytest. La parametrización de entradas inválidas representa cuatro casos separados. La evidencia XML y las corridas de Actions permiten comprobar qué pasó, en lugar de asumir que tener un archivo de pruebas equivale a ejecutarlo.
+
+| Caso o grupo | Cantidad | Qué verifica |
+|---|---:|---|
+| Datos y test de referencia | 1 | Reglas de integridad y 452 registros |
+| Autenticación e inferencia | 1 | Rechazo sin credencial, respuesta válida, trace_id y métricas |
+| Entradas inválidas parametrizadas | 4 | Texto corto, idioma no admitido, campo extra y longitud excesiva |
+| Escenario financiero | 1 | Costos mayores que mejora supuesta y rechazo de NaN |
+| Monitor SLO | 1 | Muestra insuficiente, ventana sana, latencia y errores |
+| Salud no disponible | 1 | Respuesta 503 al inyectar fallo de disponibilidad del candidato |
+
+Estas pruebas no cubren toda amenaza posible. No son una auditoría de penetración, una prueba de carga sostenida ni una validación de idoneidad financiera. Su contribución es detectar regresiones de los contratos implementados. En negocio, una salida técnicamente válida pero interpretada como orden de inversión seguiría siendo un uso incorrecto; el aviso y la supervisión humana forman parte del alcance.
+
+## Versionado de modelos y artefactos
+
+Distingo cuatro identidades: revisión de código, contenido del modelo, ejecución de evaluación e imagen del servicio. Git conserva scripts, configuración y manifiestos. El hash SHA-256 identifica los bytes exactos del modelo. MLflow asigna un `run_id` y registra parámetros, métricas, modelo y archivo de evaluación. Docker identifica la imagen construida; la automatización la etiqueta con el commit y el reconciliador obtiene su identificador inmutable.
+
+| Elemento | Identificador o ubicación | Qué recupera |
+|---|---|---|
+| Código y estado deseado | Commit Git y `deploy/staging.json` | Decisiones y configuración de una revisión |
+| Modelo | `modelos/manifest.json` y SHA-256 | Artefacto exacto congelado |
+| Evaluación local final original | e42cb64dee744747a0c6916a59fad64a | Métricas y artefacto MLflow de esa corrida |
+| Imagen | Identificador registrado en `despliegue.json` | Contenedor usado en el laboratorio |
+| Estado previo | `runtime/deployment.json` | Configuración anterior disponible para rollback local |
+| Evidencia CI | Artefactos de cada corrida de Actions | Resultado de validación y despliegue ligado al commit |
+
+El registro como artefacto MLflow no debe confundirse con un catálogo de versiones promovidas en Model Registry: esa promoción no está implementada. Para recuperar una revisión de código utilizo el historial Git; para recuperar el modelo verifico los bytes del manifiesto; para revertir el servicio uso el estado anterior que conoce el reconciliador. Si el estado local se pierde, no afirmo que exista recuperación automática desde un repositorio remoto de imágenes. Esa capacidad sería una mejora futura.
+
+## Secuencia de promoción y manejo del fallo
+
+La automatización tiene dependencia explícita: `deploy-staging` necesita que `validate` termine correctamente. En un pull request se valida sin desplegar; en main se habilita el trabajo de despliegue. Las excepciones de datos, errores de pruebas o discrepancias en probabilidades bloquean el camino antes de construir una conclusión de éxito. Los artefactos del despliegue se conservan incluso si el trabajo falla, mediante la condición `always()`.
+
+El reconciliador comprueba `production_authorized=false` y el entorno académico. Después verifica autenticación, salud y coincidencia del hash esperado. La clave se transmite al contenedor mediante variable de entorno, sin escribir su valor en la línea de argumentos del comando Docker. Las evidencias publicadas excluyen la credencial. Esto reduce exposición accidental; no equivale a disponer de un gestor central de secretos ni a resolver rotación y revocación industrial.
+
+![Arquitectura](../evidencias/arquitectura.png)
+
+Figura 1. Flujo implementado de validación, despliegue y observación. El diagrama resume relaciones; Streamlit muestra evidencia guardada y no controla operaciones bancarias.
+
+## Evidencias de ejecución y lectura correcta
+
+La corrida 45922494111 aprobó la primera versión del pipeline. La corrida 45924738199 aprobó la revisión posterior: ambos trabajos terminaron en éxito. Las pruebas locales y la segunda ejecución Docker complementan esa evidencia. No agrego sus tiempos como si fueran un ensayo estadístico: los entornos y las condiciones no son iguales.
+
+La primera invocación del experimento se hizo antes de que terminara de construirse la imagen y falló al buscarla. La bitácora conserva ese antecedente. Corregí la secuencia esperando la construcción; no oculté el fallo ni lo conté como un despliegue exitoso. De manera similar, se añadió una firma explícita al modelo registrado en MLflow después de una advertencia al inferirla desde una lista. El modelo predictivo no cambió.
+
+![Recuperación](../evidencias/latencia.png)
+
+Figura 2. Latencia del primer ensayo Docker: referencia, dos ventanas con retardo y recuperación. Fuente: `evidencias/despliegue.json`. El retorno a una ventana sana no restaura retroactivamente el presupuesto consumido.
+
+## Continuidad técnica y criterio de cierre
+
+Actividad 8 aportó el enfoque de observabilidad y respuesta estructurada; Actividad 9 aportó la lectura de costos y gobierno responsable. Fase III conserva esa intención con una implementación acotada: trazas locales, contadores en memoria y un contenedor. No afirmo que todas las funciones de las actividades previas estén desplegadas dentro de este servicio.
+
+Mantengo el umbral 0.20 y el modelo en inglés. El corpus tiene licencia CC BY-NC-SA 3.0; el uso bancario comercial exige resolver derechos y validación de dominio. Los personajes ficticios, con posiciones de 5 a 20 millones MXN, no representan clientes reales. El 1 % de compra y el 1 % de venta son supuestos académicos. Las comisiones no justifican rotación innecesaria y una noticia negativa inicia análisis, no autoriza una operación. La IA no sustituye el criterio del banquero; lo aumenta.
