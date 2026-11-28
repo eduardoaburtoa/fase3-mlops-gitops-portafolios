@@ -1,0 +1,18 @@
+{
+  "captured_during": "Revisi\u00f3n documental noviembre 2026",
+  "publication": "Binarios en rama 06 de exportaci\u00f3n",
+  "files": [
+    {
+      "path": "evidencias/docker_desktop.png",
+      "sha256": "d6c2b157ef84a0d732c8d23fb7a7812d1332baa9bdbbe1c400f6b6d5e908203f"
+    },
+    {
+      "path": "evidencias/actions_inicial.png",
+      "sha256": "ec62bb4545fa16f7588119999d52d3d921b2a6812d54a82a34c461e5297bcee8"
+    },
+    {
+      "path": "evidencias/actions_revision_final.png",
+      "sha256": "6509021782cc5c59aa319a4fc0c60362ef601cbfc02f251ac7fde1ff31e27deb"
+    }
+  ]
+}
