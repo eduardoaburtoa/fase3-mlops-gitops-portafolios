@@ -114,6 +114,16 @@ La [bitácora](../evidencias/bitacora.md) reconstruye decisiones a partir de com
 
 Las decisiones de SLO y presupuesto se relacionan con Beyer et al. (2018); el seguimiento de artefactos con MLflow (s. f.); los contratos de servicio con Ramírez (s. f.); la portabilidad y automatización con Docker (s. f.) y GitHub (s. f.); y la evaluación con Scikit-learn developers (s. f.). Malo et al. (2014) documentan el problema de orientación semántica financiera del corpus. NIST (2023) e ISO/IEC 42001:2023 aportan referentes de gestión responsable; citarlos no equivale a certificar cumplimiento ni a acreditar una auditoría normativa integral. La rúbrica de Universidad Tecmilenio (2026) determina los cuatro entregables.
 
+## Evidencia visual del desarrollo
+
+![Validación y despliegue aprobados](../evidencias/actions_revision_final.png)
+
+Figura 3. Corrida 45924738199 de GitHub Actions con validación y despliegue aprobados. La captura documenta la ejecución original; las correcciones editoriales tienen sus propias corridas y solicitudes de cambio. Los avisos de mantenimiento de Actions se conservan visibles y no se interpretan como pruebas fallidas.
+
+![Contenedor en ejecución](../evidencias/docker_desktop.png)
+
+Figura 4. Docker Desktop muestra el contenedor vertice-fase3 en ejecución durante la revisión. Esta captura confirma el estado observado; los valores de consumo de la interfaz no son una prueba de carga ni se utilizan como benchmark. Los resultados del experimento se consultan en despliegue.json y auditoria.jsonl.
+
 ## Conclusiones
 
 Concluyo que la respuesta a un incidente debe preservar evidencia, recuperar una configuración conocida y reconocer el presupuesto consumido. En mi práctica bancaria, una recuperación rápida no elimina la obligación de explicar lo ocurrido. Mantengo el ánimo de fortalecer observabilidad durable y validación prospectiva, pero no afirmo que estén implementadas. La medición local confirma recuperación dentro del alcance probado, no disponibilidad mensual ni alta disponibilidad. La IA no sustituye el criterio del banquero; lo aumenta.

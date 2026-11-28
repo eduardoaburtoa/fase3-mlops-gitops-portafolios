@@ -105,6 +105,16 @@ Figura 1. Stack y flujo técnico del laboratorio.
 
 Figura 2. Recuperación de latencia medida; no representa un beneficio financiero realizado.
 
+## Evidencia visual del desarrollo
+
+![Validación y despliegue aprobados](../evidencias/actions_revision_final.png)
+
+Figura 3. Corrida 45924738199 de GitHub Actions con validación y despliegue aprobados. La captura documenta la ejecución original; las correcciones editoriales tienen sus propias corridas y solicitudes de cambio. Los avisos de mantenimiento de Actions se conservan visibles y no se interpretan como pruebas fallidas.
+
+![Contenedor en ejecución](../evidencias/docker_desktop.png)
+
+Figura 4. Docker Desktop muestra el contenedor vertice-fase3 en ejecución durante la revisión. Esta captura confirma el estado observado; los valores de consumo de la interfaz no son una prueba de carga ni se utilizan como benchmark. Los resultados del experimento se consultan en despliegue.json y auditoria.jsonl.
+
 ## Conclusiones
 
 Concluyo que el valor técnico generado es una entrega trazable que puedo explicar y reproducir. El valor económico de Fase I sigue siendo esperado y debe contrastarse en el piloto. Con veinte años en banca, sostengo que la confianza del cliente depende de esa claridad. Mantengo el ánimo de avanzar con seis asesores durante nueve meses, sujeto a validación y autorizaciones; no confundo arquitectura funcional con ROI materializado. La IA no sustituye el criterio del banquero; lo aumenta.
