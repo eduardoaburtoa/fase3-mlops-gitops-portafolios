@@ -106,3 +106,48 @@ Figura 2. Respuesta a retardo inyectado y recuperación. Se conserva la primera 
 Actividad 8 enseñó a distinguir detección, respuesta y recuperación; Actividad 9 añadió costos, escala y gobierno. Mantengo esas lecciones sin afirmar que el prototipo actual contiene una plataforma completa de observabilidad. Los contadores en memoria se reinician con el proceso. La correlación por trace_id es local; no existe Collector de OpenTelemetry. El tablero lee evidencias guardadas, no una cartera real en tiempo real.
 
 Para un piloto propondría métricas por idioma y perfil, etiquetas independientes, análisis de deriva y retención durable. No usaría una señal de drift como autorización automática de reentrenamiento. El corpus CC BY-NC-SA 3.0 requiere resolver derechos para uso comercial y el modelo en inglés requiere adaptación validada al dominio mexicano. `production_authorized=false` se conserva. Los 150 clientes son personajes ficticios con posiciones de 5 a 20 millones MXN; el 1 % de compra y de venta son supuestos académicos. Una noticia inicia análisis, no autoriza una operación. La IA no sustituye el criterio del banquero; lo aumenta.
+
+
+## Evidencia del proceso y fundamentos
+
+La [bitácora](../evidencias/bitacora.md) reconstruye decisiones a partir de commits y configuración. El [registro de versiones](../evidencias/registro_versiones.md) documenta la cadena de procedencia y el umbral elegido con desarrollo en Actividad 6. No hubo reentrenamiento en Fase III. Actividad 8 aporta el antecedente de observabilidad y Actividad 9 el de escalabilidad, FinOps y gobierno. La meta conjunta histórica de recall ≥90 % y precisión ≥60 % no se alcanzó; no la presento como cumplida.
+
+Las decisiones de SLO y presupuesto se relacionan con Beyer et al. (2018); el seguimiento de artefactos con MLflow (s. f.); los contratos de servicio con Ramírez (s. f.); la portabilidad y automatización con Docker (s. f.) y GitHub (s. f.); y la evaluación con Scikit-learn developers (s. f.). Malo et al. (2014) documentan el problema de orientación semántica financiera del corpus. NIST (2023) e ISO/IEC 42001:2023 aportan referentes de gestión responsable; citarlos no equivale a certificar cumplimiento ni a acreditar una auditoría normativa integral. La rúbrica de Universidad Tecmilenio (2026) determina los cuatro entregables.
+
+## Conclusiones
+
+Concluyo que la respuesta a un incidente debe preservar evidencia, recuperar una configuración conocida y reconocer el presupuesto consumido. En mi práctica bancaria, una recuperación rápida no elimina la obligación de explicar lo ocurrido. Mantengo el ánimo de fortalecer observabilidad durable y validación prospectiva, pero no afirmo que estén implementadas. La medición local confirma recuperación dentro del alcance probado, no disponibilidad mensual ni alta disponibilidad. La IA no sustituye el criterio del banquero; lo aumenta.
+
+## Referencias
+
+Beyer, B., Murphy, N. R., Rensin, D. K., Kawahara, K., & Thorne, S. (Eds.). (2018). *The site reliability workbook: Practical ways to implement SRE*. O’Reilly Media. https://sre.google/workbook/table-of-contents/
+
+Docker, Inc. (s. f.). *Docker documentation*. Recuperado el 27 de noviembre de 2026, de https://docs.docker.com/
+
+GitHub. (s. f.). *GitHub Actions documentation*. Recuperado el 27 de noviembre de 2026, de https://docs.github.com/en/actions
+
+International Organization for Standardization, & International Electrotechnical Commission. (2023). *Information technology—Artificial intelligence—Management system* (ISO/IEC Standard No. 42001:2023). https://www.iso.org/standard/42001
+
+Malo, P., Sinha, A., Korhonen, P., Wallenius, J., & Takala, P. (2014). Good debt or bad debt: Detecting semantic orientations in economic texts. *Journal of the Association for Information Science and Technology, 65*(4), 782–796. https://doi.org/10.1002/asi.23062
+
+MLflow. (s. f.). *MLflow tracking*. Recuperado el 27 de noviembre de 2026, de https://mlflow.org/docs/latest/ml/tracking/
+
+National Institute of Standards and Technology. (2023). *Artificial intelligence risk management framework (AI RMF 1.0)* (NIST AI 100-1). https://doi.org/10.6028/NIST.AI.100-1
+
+Ramírez, S. (s. f.). *FastAPI*. Recuperado el 27 de noviembre de 2026, de https://fastapi.tiangolo.com/
+
+Scikit-learn developers. (s. f.). *Scikit-learn user guide*. Recuperado el 27 de noviembre de 2026, de https://scikit-learn.org/stable/user_guide.html
+
+Universidad Tecmilenio. (2026). *Gestión de proyectos de inteligencia artificial: Proyecto Fase III Resultados y rúbrica de evaluación* [Material del curso, Módulo 3, Semana 12].
+
+
+## Cobertura de la rúbrica
+
+| Apartado | Cómo lo cubre esta entrega | Evidencia complementaria |
+|---|---|---|
+| Pipeline automatizado de IA | Validación de código y datos, versionado y CD temporal | 01_Pipeline.pdf, workflow y corridas Actions |
+| Operación técnica | Métricas, auditoría, incidentes y optimización delimitada | 02_Operacion.pdf y archivos de evidencia |
+| Portfolio técnico estratégico | Valor esperado, stack, trayectoria y resultados | 03_Portfolio.pdf y business case de Fase I |
+| Entrevista profesional | Guion, MP4 existente y material de grabación personal | Video sintético identificado; grabación propia pendiente |
+
+Este documento fue estructurado precisamente para cubrir esos 4 apartados de forma explícita y verificable.

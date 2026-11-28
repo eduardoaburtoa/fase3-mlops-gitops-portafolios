@@ -1,0 +1,7 @@
+{
+ "ChatGPT / OpenAI":{"uso":"Sí","descripcion":"ChatGPT/Codex apoyó programación, ejecución de pruebas, simulaciones, documentación, revisión visual y preparación de material para grabación personal. El MP4 publicado sigue usando narración sintética hasta recibir y verificar la grabación de Eduardo."},
+ "Claude (Anthropic)":{"uso":"Sí","descripcion":"Revisión técnica independiente de la entrega: clonado del repositorio, ejecución propia de las nueve pruebas automatizadas, verificación de la corrida de GitHub Actions con sus trabajos de validación y despliegue, comprobación del video y de la cadena de procedencia del modelo desde la Actividad 6, y cotejo de los cuatro entregables contra el enunciado. No redactó el código, los documentos ni el guion."},
+ "Gemini (Google)":{"uso":"No en esta fase","descripcion":"No se atribuye una nueva ejecución o revisión de esta entrega."},
+ "Copilot (Microsoft)":{"uso":"No en esta fase","descripcion":"No se atribuye una nueva ejecución o revisión de esta entrega."},
+ "fuente_revision_claude":"Declaración y hallazgos de auditoría proporcionados por Eduardo en su solicitud de correcciones."
+}
